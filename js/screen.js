@@ -10,28 +10,29 @@
         main:"#ffffff"
     }
 
-    function DrawRect(x,y,width,height,fill,stroke)
+    function DrawRect(position,width,height,fill,stroke)
     {
         if(fill != null && fill != undefined)
         {
             pincel.fillStyle = fill;
-            pincel.fillRect(x,y,width,height);
+            pincel.fillRect(position.x,position.y,width,height);
         }
         if(stroke != null && stroke != undefined)
         {
             pincel.strokeStyle = stroke;
-            pincel.strokeRect(x,y,width,height);
+            pincel.strokeRect(position.x,position.y,width,height);
         }
     }
-    function DrawCircle(x, y, radius, color) {
+    function DrawCircle(position, radius, color) {
 
         pincel.fillStyle = color;
         pincel.beginPath();
-        pincel.arc(x, y, radius, 0, 2*3.14);
+        pincel.arc(position.x, position.y, radius, 0, 2*3.14);
         pincel.fill();
     }
     function ClearScreen(){
-        DrawRect(0,0,screenWidth,screenHeight,colors.background,null);
+        DrawRect(Vector2d.zero(),screenWidth,screenHeight,colors.background,null);
+        
         for(var j = 0; j < screenHeight / bloco; j++)
         {
             for(var i = 0; i < screenWidth / bloco; i++)
@@ -42,23 +43,35 @@
                     {
                         DrawInPoint(i,j);
                     }
-                    else if((i == 1 || i == (screenWidth - (bloco * 2)) / bloco) && j > 0 && j < (screenHeight - (bloco * 2)) / bloco)
+                    else if((i == 1 || i == GetLastXBlock()) && j > 0 && j < GetLastYBlock())
                     {
                         DrawInPoint(i,j);
                     }
                 }
             }
         }
+        
     }
     function DrawInPoint(x,y)
     {
-        DrawRect(x*bloco,y*bloco,bloco,bloco,colors.main,colors.background);
+        
+        DrawRect(new Vector2d(x*bloco,y*bloco),bloco,bloco,colors.main,colors.background);
+    }
+    function GetLastXBlock()
+    {
+        return (screenWidth - (bloco * 2)) / bloco;
+    }
+    function GetLastYBlock()
+    {
+        return (screenHeight - (bloco * 2)) / bloco;
     }
     
     window.Screen = {
         DrawRect:DrawRect,
         DrawCircle:DrawCircle,
         ClearScreen:ClearScreen,
-        DrawInPoint:DrawInPoint
+        DrawInPoint:DrawInPoint,
+        GetLastXBlock:GetLastXBlock,
+        GetLastYBlock:GetLastYBlock
     }
 })();
