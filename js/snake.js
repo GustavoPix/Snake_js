@@ -27,14 +27,15 @@ class Snake{
     Move()
     {
         var lastPosition = this.locals[this.locals.length-1];
-        var endPosition = this.locals.shift().set(lastPosition.x,lastPosition.y).sunToVector(this.dir);
+        var shiftPosition = this.locals.shift();
+        var endPosition = new Vector2d(lastPosition.x,lastPosition.y).sunToVector(this.dir);
         if(this.CheckCollider(endPosition))
         {
             Main.GameOver();
         }
-        else
+        else if(Main.CheckGetDot(endPosition))
         {
-            
+            this.locals = [shiftPosition].concat(this.locals);
         }
         this.Add(endPosition);
     }

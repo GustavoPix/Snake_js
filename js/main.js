@@ -1,6 +1,13 @@
 (function Main(){
+
+    window.Main = {
+        GameOver:GameOver,
+        CheckGetDot:CheckGetDot,
+        CheckPositionsSnake:CheckPositionsSnake
+    }
     
     var snake = new Snake();
+    var dot = new Dot();
     var gameOn =  true;
 
     function Start(){
@@ -37,12 +44,30 @@
         {
             snake.Move();
             Screen.ClearScreen();
+            var pieceDot = dot.GetPosition();
             var piecesSnake = snake.GetPositions();
             
             piecesSnake.forEach(p => {
                 Screen.DrawInPoint(p.x,p.y);
             });
+            //Screen.DrawInPoint(pieceDot.x,pieceDot.y);
+            Screen.Drawpoint(pieceDot);
         }
+    }
+
+    function CheckGetDot(vec)
+    {
+        if(vec.isEqual(dot.GetPosition()))
+        {
+            var aux = dot.GetDot();
+            return true;
+        }
+        return false;
+    }
+
+    function CheckPositionsSnake(vec)
+    {
+        return snake.GetPositions().find(p => p.isEqual(vec)) ?  true : false;
     }
 
     function GameOver()
@@ -53,8 +78,6 @@
 
     Start();
 
-    window.Main = {
-        GameOver:GameOver
-    }
+    
     
 })()

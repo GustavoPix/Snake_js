@@ -54,8 +54,14 @@
     }
     function DrawInPoint(x,y)
     {
-        
         DrawRect(new Vector2d(x*bloco,y*bloco),bloco,bloco,colors.main,colors.background);
+    }
+    function Drawpoint(vec)
+    {
+        DrawRect(new Vector2d(vec.x * bloco, vec.y * bloco + bloco / 3),bloco / 3, bloco / 3, colors.main, colors.background);
+        DrawRect(new Vector2d(vec.x * bloco + bloco / 3, vec.y * bloco),bloco / 3, bloco / 3, colors.main, colors.background);
+        DrawRect(new Vector2d(vec.x * bloco + (bloco / 3 * 2), vec.y * bloco + bloco / 3),bloco / 3, bloco / 3, colors.main, colors.background);
+        DrawRect(new Vector2d(vec.x * bloco + bloco / 3, vec.y * bloco + (bloco / 3 * 2)),bloco / 3, bloco / 3, colors.main, colors.background);
     }
     function GetLastXBlock()
     {
@@ -72,6 +78,7 @@
         ClearScreen:ClearScreen,
         DrawInPoint:DrawInPoint,
         GetLastXBlock:GetLastXBlock,
-        GetLastYBlock:GetLastYBlock
+        GetLastYBlock:GetLastYBlock,
+        Drawpoint:Drawpoint
     }
 })();
