@@ -3,12 +3,15 @@
     window.Main = {
         GameOver:GameOver,
         CheckGetDot:CheckGetDot,
-        CheckPositionsSnake:CheckPositionsSnake
+        CheckPositionsSnake:CheckPositionsSnake,
+        StartGame:StartGame
     }
     
     var snake = new Snake();
     var dot = new Dot();
     var gameOn =  true;
+    var gameStart = false;
+    var tela = document.querySelector("canvas");
 
     function Start(){
         setInterval(function(){
@@ -40,18 +43,40 @@
 
     function Update()
     {
+        Screen.ClearScreen();
+        var pieceDot = dot.GetPosition();
+        var piecesSnake = snake.GetPositions();
+        
+        piecesSnake.forEach(p => {
+            Screen.DrawInPoint(p.x,p.y);
+        });
+        //Screen.DrawInPoint(pieceDot.x,pieceDot.y);
+        Screen.Drawpoint(pieceDot);
         if(gameOn)
         {
-            snake.Move();
-            Screen.ClearScreen();
-            var pieceDot = dot.GetPosition();
-            var piecesSnake = snake.GetPositions();
-            
-            piecesSnake.forEach(p => {
-                Screen.DrawInPoint(p.x,p.y);
-            });
-            //Screen.DrawInPoint(pieceDot.x,pieceDot.y);
-            Screen.Drawpoint(pieceDot);
+            if(gameStart)
+            {
+                snake.Move();
+            }
+
+            if(!gameStart)
+            {
+                var local = Screen.GetScreenSize();
+                local.x = local.x / 2;
+                local.y = local.y / 2;
+                Screen.DrawText("Pressione -> para começar",local);
+            }
+        }
+        else
+        {
+            var local = Screen.GetScreenSize();
+            local.x = local.x / 2;
+            local.y = local.y / 2;
+            Screen.DrawText("Game Over", local);
+            local.y += 25;
+            Screen.DrawText(`Score: ${snake.GetScore()}`, local);
+            local.y += 25;
+            Screen.DrawText("Clique aqui para jogar novamente", local);
         }
     }
 
@@ -73,11 +98,30 @@
     function GameOver()
     {
         gameOn = false;
-        alert("Game Over!");
+        //alert("Game Over!");
+    }
+    function StartGame()
+    {
+        if(gameOn)
+        {
+            gameStart = true;
+        }
+    }
+    function ResetGame()
+    {
+        if(!gameOn)
+        {
+            gameOn = true;
+            gameStart = false;
+            snake.Reset();
+            dot.NewPosition();
+        }
     }
 
     Start();
 
-    
+    tela.addEventListener("click",function(e){
+        ResetGame();
+    });
     
 })()

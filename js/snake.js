@@ -1,17 +1,24 @@
 class Snake{
     constructor()
     {
-        this.locals = [];
-        this.Start();
-        this.dir = Vector2d.forward();
+        this.Reset()
     }
-
+    
     Start()
     {
-        for(var i = 5; i >= 0; i--)
+        this.size = 5;
+        for(var i = this.size; i > 0; i--)
         {
             this.Add(new Vector2d(10 - i, 10));
         }
+    }
+
+    Reset()
+    {
+        this.locals = [];
+        this.Start();
+        this.dir = Vector2d.forward();
+        this.size = 5;
     }
     
     Add(vector)
@@ -49,6 +56,11 @@ class Snake{
         return this.locals.find(l => position.isEqual(l));
     }
 
+    GetScore()
+    {
+        return this.locals.length - this.size;
+    }
+
     Up()
     {
         if(this.dir.y == 0)
@@ -72,6 +84,7 @@ class Snake{
     }
     Right()
     {
+        Main.StartGame();
         if(this.dir.x == 0)
         {
             this.dir.set(1,0);

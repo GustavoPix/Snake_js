@@ -71,6 +71,18 @@
     {
         return (screenHeight - (bloco * 2)) / bloco;
     }
+    function GetScreenSize()
+    {
+        return new Vector2d(screenWidth,screenHeight);
+    }
+
+    function DrawText(text,position)
+    {
+        pincel.font = "30px VT323";
+        pincel.fillStyle = colors.main;
+        pincel.textAlign = "center";
+        pincel.fillText(text,position.x,position.y);
+    }
     
     window.Screen = {
         DrawRect:DrawRect,
@@ -79,6 +91,8 @@
         DrawInPoint:DrawInPoint,
         GetLastXBlock:GetLastXBlock,
         GetLastYBlock:GetLastYBlock,
-        Drawpoint:Drawpoint
+        Drawpoint:Drawpoint,
+        DrawText:DrawText,
+        GetScreenSize:GetScreenSize
     }
 })();
