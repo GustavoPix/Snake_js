@@ -2,12 +2,13 @@
     var tela = document.querySelector("canvas");
     var pincel = tela.getContext("2d");
 
-    var screenWidth = 480;
-    var screenHeight = 480;
+    var screenWidth = 360;
+    var screenHeight = 360;
     var bloco = 10;
     var colors = {
-        background:"#000000",
-        main:"#ffffff"
+        background:"#1F1F1F",
+        main:"#BFBFBF",
+        secondary:"#8C8C8C"
     }
 
     function DrawRect(position,width,height,fill,stroke)
@@ -52,16 +53,17 @@
         }
         
     }
-    function DrawInPoint(x,y)
+    function DrawInPoint(x,y,secondary = false)
     {
-        DrawRect(new Vector2d(x*bloco,y*bloco),bloco,bloco,colors.main,colors.background);
+        DrawRect(new Vector2d(x*bloco,y*bloco),bloco,bloco,secondary ? colors.secondary : colors.main,colors.background);
     }
-    function Drawpoint(vec)
+    function Drawpoint(vec, secondary = false)
     {
-        DrawRect(new Vector2d(vec.x * bloco, vec.y * bloco + bloco / 3),bloco / 3, bloco / 3, colors.main, colors.background);
-        DrawRect(new Vector2d(vec.x * bloco + bloco / 3, vec.y * bloco),bloco / 3, bloco / 3, colors.main, colors.background);
-        DrawRect(new Vector2d(vec.x * bloco + (bloco / 3 * 2), vec.y * bloco + bloco / 3),bloco / 3, bloco / 3, colors.main, colors.background);
-        DrawRect(new Vector2d(vec.x * bloco + bloco / 3, vec.y * bloco + (bloco / 3 * 2)),bloco / 3, bloco / 3, colors.main, colors.background);
+        var color = secondary ? colors.secondary : colors.main;
+        DrawRect(new Vector2d(vec.x * bloco, vec.y * bloco + bloco / 3),bloco / 3, bloco / 3, color, colors.background);
+        DrawRect(new Vector2d(vec.x * bloco + bloco / 3, vec.y * bloco),bloco / 3, bloco / 3, color, colors.background);
+        DrawRect(new Vector2d(vec.x * bloco + (bloco / 3 * 2), vec.y * bloco + bloco / 3),bloco / 3, bloco / 3, color, colors.background);
+        DrawRect(new Vector2d(vec.x * bloco + bloco / 3, vec.y * bloco + (bloco / 3 * 2)),bloco / 3, bloco / 3, color, colors.background);
     }
     function GetLastXBlock()
     {
@@ -81,6 +83,8 @@
         pincel.font = "30px VT323";
         pincel.fillStyle = colors.main;
         pincel.textAlign = "center";
+        pincel.strokeStyle = colors.background;
+        pincel.strokeText(text,position.x,position.y);
         pincel.fillText(text,position.x,position.y);
     }
     

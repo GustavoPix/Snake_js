@@ -48,10 +48,10 @@
         var piecesSnake = snake.GetPositions();
         
         piecesSnake.forEach(p => {
-            Screen.DrawInPoint(p.x,p.y);
+            Screen.DrawInPoint(p.x,p.y,!gameOn);
         });
         //Screen.DrawInPoint(pieceDot.x,pieceDot.y);
-        Screen.Drawpoint(pieceDot);
+        Screen.Drawpoint(pieceDot,!gameOn);
         if(gameOn)
         {
             if(gameStart)
@@ -75,8 +75,10 @@
             Screen.DrawText("Game Over", local);
             local.y += 25;
             Screen.DrawText(`Score: ${snake.GetScore()}`, local);
+            local.y += 50;
+            Screen.DrawText("Clique aqui para", local);
             local.y += 25;
-            Screen.DrawText("Clique aqui para jogar novamente", local);
+            Screen.DrawText("jogar novamente", local);
         }
     }
 
@@ -122,6 +124,22 @@
 
     tela.addEventListener("click",function(e){
         ResetGame();
+    });
+
+    document.getElementById("buttonUp").addEventListener("click",function(e){
+        snake.Up();
+    });
+
+    document.getElementById("buttonLeft").addEventListener("click",function(e){
+        snake.Left();
+    });
+
+    document.getElementById("buttonRight").addEventListener("click",function(e){
+        snake.Right();
+    });
+
+    document.getElementById("buttonDown").addEventListener("click",function(e){
+        snake.Down();
     });
     
 })()
